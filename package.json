@@ -1,0 +1,27 @@
+{
+  "name": "plugin-node-uiextension",
+  "version": "0.0.1-alpha",
+  "description": "Provide a simple PL chrome customization path versus forking styleguide-assets-default",
+  "main": "index.js",
+  "dependencies": {
+    "fs-extra": "^0.30.0",
+    "glob": "^7.0.0",
+    "lodash": "~4.13.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmuenzenmeyer/plugin-node-uiextension.git"
+  },
+  "scripts": {
+    "test": "eslint dist/js/plugin-node-uiextension.js index.js"
+  },
+  "author": "Brian Muenzenmeyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bmuenzenmeyer/plugin-node-uiextension/issues"
+  },
+  "homepage": "https://github.com/bmuenzenmeyer/plugin-node-uiextension",
+  "devDependencies": {
+    "eslint": "^3.5.0"
+  }
+}
