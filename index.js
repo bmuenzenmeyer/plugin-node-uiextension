@@ -7,8 +7,9 @@ const glob = require('glob');
 const path = require('path');
 const EOL = require('os').EOL;
 const _ = require('lodash');
+const config = require('./config.json');
 
-function writeConfigToOutput(pluginConfig) {
+function writeConfigToOutput(patternlab, pluginConfig) {
   var pluginConfigPathName = path.resolve(patternlab.config.paths.public.root, 'patternlab-components', 'packages');
   try {
     fs.outputFileSync(pluginConfigPathName + '/' + pluginName + '.json', JSON.stringify(pluginConfig, null, 2));
@@ -19,9 +20,7 @@ function writeConfigToOutput(pluginConfig) {
 }
 
 function onBuildStart(patternlab){
-  console.log(patternlab);
-  console.log(_.find(patternlab.plugins, {pluginName}));
-  writeConfigToOutput(_.find(patternlab.plugins, {pluginName}));
+  writeConfigToOutput(patternlab, _.find(patternlab.plugins, {pluginName}));
 }
 
 /**
@@ -31,7 +30,6 @@ function onBuildStart(patternlab){
    */
 function registerEvents(patternlab) {
   //register our handler at the appropriate time of execution
-  patternlab.events.on('patternlab-build-pattern-start', onBuildStart);
 }
 
 /**
@@ -40,16 +38,19 @@ function registerEvents(patternlab) {
 *
 */
 function getPluginFrontendConfig() {
-  return {
-    'name':'pattern-lab\/' + pluginName,
-    'templates':[],
-    'stylesheets':[],
-    'javascripts':[
-      'patternlab-components\/pattern-lab\/' + pluginName + '\/js\/' + pluginName + '.js'
+  var defaults = {
+    "name":"pattern-lab\/plugin-node-uiextension",
+    "templates":[],
+    "stylesheets":[],
+    "javascripts":[
+      "patternlab-components\/pattern-lab\/" + pluginName + "\/js\/" + pluginName + ".js"
     ],
-    'onready':'PluginUIExtension.init()',
-    'callback':''
-  }
+    "onready":"PluginUIExtension.init()",
+    "callback":""
+  };
+
+  var pluginConfig = require('./config.json');
+  return _.extend({}, defaults, pluginConfig);
 }
 
 /**
@@ -65,9 +66,10 @@ function pluginInit(patternlab) {
 
   //write the plugin json to public/patternlab-components
   var pluginConfig = getPluginFrontendConfig();
-  writeConfigToOutput(pluginConfig);
+  pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets;
+  writeConfigToOutput(patternlab, pluginConfig);
 
-  //add the plugin config to the patternlab-object
+  //add the plugin config to the patternlab-object for later export
   if (!patternlab.plugins) {
     patternlab.plugins = [];
   }
@@ -78,33 +80,16 @@ function pluginInit(patternlab) {
 
   if (pluginFiles && pluginFiles.length > 0) {
 
-    let tab_frontend_snippet = fs.readFileSync(path.resolve(__dirname + '/src/snippet.js').replace(/\\/g,"/"), 'utf8');
-
     for (let i = 0; i < pluginFiles.length; i++) {
       try {
         var fileStat = fs.statSync(pluginFiles[i]);
         if (fileStat.isFile()) {
           var relativePath = path.relative(__dirname, pluginFiles[i]).replace('dist', ''); //dist is dropped
           var writePath = path.join(patternlab.config.paths.public.root, 'patternlab-components', 'pattern-lab', pluginName, relativePath);
-
-          //a message to future plugin authors:
-          //depending on your plugin's job - you might need to alter the dist file instead of copying.
-          //if you are simply copying dist files, you can probably do the below:
-          //fs.copySync(pluginFiles[i], writePath);
-
-          //in this case, we need to alter the dist file to loop through our tabs to load as defined in the package.json
-          //we are also being a bit lazy here, since we only expect one file
-          let tabJSFileContents = fs.readFileSync(pluginFiles[i], 'utf8');
-          var snippetString = '';
-          for (let j = 0; j < fileTypes.length; j++) {
-            let tabSnippetLocal = tab_frontend_snippet.replace(/<<type>>/g, fileTypes[j]).replace(/<<typeUC>>/g, fileTypes[j].toUpperCase());
-            snippetString += tabSnippetLocal + EOL;
-          }
-          tabJSFileContents = tabJSFileContents.replace('/*SNIPPETS*/', snippetString);
-          fs.outputFileSync(writePath, tabJSFileContents);
+          fs.copySync(pluginFiles[i], writePath);
         }
       } catch (ex) {
-        console.trace('plugin-node-tab: Error occurred while copying pluginFile', pluginFiles[i]);
+        console.trace(pluginName + ': Error occurred while copying pluginFile', pluginFiles[i]);
         console.log(ex);
       }
     }
