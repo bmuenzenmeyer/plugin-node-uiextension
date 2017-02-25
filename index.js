@@ -55,6 +55,14 @@ function createLink(link, template) {
 }
 
 /**
+ * Replaces the snippet placeholder with actual content
+ */
+function fillPlaceholder(file, placeholder, snippet){
+  snippet = snippet.replace(/,\s*$/, '');
+  return file.replace(placeholder, snippet);
+}
+
+/**
 * The entry point for the plugin. You should not have to alter this code much under many circumstances.
 * Instead, alter getPluginFrontendConfig() and registerEvents() methods
   */
@@ -85,7 +93,7 @@ function pluginInit(patternlab) {
 
     const link_frontend_snippet = fs.readFileSync(path.resolve(__dirname + '/src/snippet.js'), 'utf8');
 
-    for (let i = 0; i < pluginFiles.length; i++) {
+    for (var i = 0; i < pluginFiles.length; i++) {
       try {
         var fileStat = fs.statSync(pluginFiles[i]);
         if (fileStat.isFile()) {
@@ -95,42 +103,41 @@ function pluginInit(patternlab) {
           //we need to alter the dist file to add links for us
           //we are also being a bit lazy here, since we only expect one file
           let uiextensionJSFileContents = fs.readFileSync(pluginFiles[i], 'utf8');
+          let snippetString = '';
 
           //construct our links from the snippets
           if (pluginConfig.navLinks) {
-            let snippetString = '';
             if (pluginConfig.navLinks.before && pluginConfig.navLinks.before.length > 0) {
-              for (let i = 0; i <= pluginConfig.navLinks.before.length; i++) {
-                snippetString += createLink(pluginConfig.navLinks.before[i], link_frontend_snippet);
+              for (var n = 0; n < pluginConfig.navLinks.before.length; n++) {
+                snippetString += createLink(pluginConfig.navLinks.before[n], link_frontend_snippet);
               }
-              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*NAVLINKS-BEFORE-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*NAVLINKS-BEFORE-SNIPPET*/', snippetString);
             }
 
-            let snippetString = '';
+            snippetString = '';
             if (pluginConfig.navLinks.after && pluginConfig.navLinks.after.length > 0) {
-              for (let i = 0; i <= pluginConfig.navLinks.after.length; i++) {
-                snippetString += createLink(pluginConfig.navLinks.after[i], link_frontend_snippet);
+              for (var j = 0; j < pluginConfig.navLinks.after.length; j++) {
+                snippetString += createLink(pluginConfig.navLinks.after[j], link_frontend_snippet);
               }
-              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*NAVLINKS-AFTER-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*NAVLINKS-AFTER-SNIPPET*/', snippetString);
             }
-
           }
 
           if (pluginConfig.gearLinks) {
-            let snippetString = '';
+            snippetString = '';
             if (pluginConfig.gearLinks.before && pluginConfig.gearLinks.before.length > 0) {
-              for (let i = 0; i <= pluginConfig.gearLinks.before.length; i++) {
-                snippetString += createLink(pluginConfig.gearLinks.before[i], link_frontend_snippet);
+              for (var k = 0; k < pluginConfig.gearLinks.before.length; k++) {
+                snippetString += createLink(pluginConfig.gearLinks.before[k], link_frontend_snippet);
               }
-              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*GEARLINKS-BEFORE-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*GEARLINKS-BEFORE-SNIPPET*/', snippetString);
             }
 
-            let snippetString = '';
+            snippetString = '';
             if (pluginConfig.gearLinks.beforeSearch && pluginConfig.gearLinks.beforeSearch.length > 0) {
-              for (let i = 0; i <= pluginConfig.gearLinks.beforeSearch.length; i++) {
-                snippetString += createLink(pluginConfig.gearLinks.beforeSearch[i], link_frontend_snippet);
+              for (var m = 0; m < pluginConfig.gearLinks.beforeSearch.length; m++) {
+                snippetString += createLink(pluginConfig.gearLinks.beforeSearch[m], link_frontend_snippet);
               }
-              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*GEARLINKS-BEFORESEARCH-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*GEARLINKS-BEFORESEARCH-SNIPPET*/', snippetString);
             }
           }
 
