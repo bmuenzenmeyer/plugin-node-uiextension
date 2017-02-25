@@ -5,9 +5,7 @@ const pluginName = 'plugin-node-uiextension';
 const fs = require('fs-extra');
 const glob = require('glob');
 const path = require('path');
-const EOL = require('os').EOL;
 const _ = require('lodash');
-const config = require('./config.json');
 
 function writeConfigToOutput(patternlab, pluginConfig) {
   var pluginConfigPathName = path.resolve(patternlab.config.paths.public.root, 'patternlab-components', 'packages');
@@ -17,10 +15,6 @@ function writeConfigToOutput(patternlab, pluginConfig) {
     console.trace(pluginName + ': Error occurred while writing pluginFile configuration');
     console.log(ex);
   }
-}
-
-function onBuildStart(patternlab){
-  writeConfigToOutput(patternlab, _.find(patternlab.plugins, {pluginName}));
 }
 
 /**
@@ -54,6 +48,13 @@ function getPluginFrontendConfig() {
 }
 
 /**
+* Creates a link from the passed in data
+*/
+function createLink(link, template) {
+  return template.replace('<<class>>', link.class).replace('<<url>>', link.url).replace('<<text>>', link.text);
+}
+
+/**
 * The entry point for the plugin. You should not have to alter this code much under many circumstances.
 * Instead, alter getPluginFrontendConfig() and registerEvents() methods
   */
@@ -67,6 +68,8 @@ function pluginInit(patternlab) {
   //write the plugin json to public/patternlab-components
   var pluginConfig = getPluginFrontendConfig();
   pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets;
+  pluginConfig.navLinks = patternlab.config.plugins[pluginName].options.navLinks;
+  pluginConfig.gearLinks = patternlab.config.plugins[pluginName].options.gearLinks;
   writeConfigToOutput(patternlab, pluginConfig);
 
   //add the plugin config to the patternlab-object for later export
@@ -80,13 +83,58 @@ function pluginInit(patternlab) {
 
   if (pluginFiles && pluginFiles.length > 0) {
 
+    const link_frontend_snippet = fs.readFileSync(path.resolve(__dirname + '/src/snippet.js'), 'utf8');
+
     for (let i = 0; i < pluginFiles.length; i++) {
       try {
         var fileStat = fs.statSync(pluginFiles[i]);
         if (fileStat.isFile()) {
           var relativePath = path.relative(__dirname, pluginFiles[i]).replace('dist', ''); //dist is dropped
           var writePath = path.join(patternlab.config.paths.public.root, 'patternlab-components', 'pattern-lab', pluginName, relativePath);
-          fs.copySync(pluginFiles[i], writePath);
+
+          //we need to alter the dist file to add links for us
+          //we are also being a bit lazy here, since we only expect one file
+          let uiextensionJSFileContents = fs.readFileSync(pluginFiles[i], 'utf8');
+
+          //construct our links from the snippets
+          if (pluginConfig.navLinks) {
+            let snippetString = '';
+            if (pluginConfig.navLinks.before && pluginConfig.navLinks.before.length > 0) {
+              for (let i = 0; i <= pluginConfig.navLinks.before.length; i++) {
+                snippetString += createLink(pluginConfig.navLinks.before[i], link_frontend_snippet);
+              }
+              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*NAVLINKS-BEFORE-SNIPPET*/', snippetString);
+            }
+
+            let snippetString = '';
+            if (pluginConfig.navLinks.after && pluginConfig.navLinks.after.length > 0) {
+              for (let i = 0; i <= pluginConfig.navLinks.after.length; i++) {
+                snippetString += createLink(pluginConfig.navLinks.after[i], link_frontend_snippet);
+              }
+              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*NAVLINKS-AFTER-SNIPPET*/', snippetString);
+            }
+
+          }
+
+          if (pluginConfig.gearLinks) {
+            let snippetString = '';
+            if (pluginConfig.gearLinks.before && pluginConfig.gearLinks.before.length > 0) {
+              for (let i = 0; i <= pluginConfig.gearLinks.before.length; i++) {
+                snippetString += createLink(pluginConfig.gearLinks.before[i], link_frontend_snippet);
+              }
+              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*GEARLINKS-BEFORE-SNIPPET*/', snippetString);
+            }
+
+            let snippetString = '';
+            if (pluginConfig.gearLinks.beforeSearch && pluginConfig.gearLinks.beforeSearch.length > 0) {
+              for (let i = 0; i <= pluginConfig.gearLinks.beforeSearch.length; i++) {
+                snippetString += createLink(pluginConfig.gearLinks.beforeSearch[i], link_frontend_snippet);
+              }
+              uiextensionJSFileContents = uiextensionJSFileContents.replace('/*GEARLINKS-BEFORESEARCH-SNIPPET*/', snippetString);
+            }
+          }
+
+          fs.outputFileSync(writePath, uiextensionJSFileContents);
         }
       } catch (ex) {
         console.trace(pluginName + ': Error occurred while copying pluginFile', pluginFiles[i]);

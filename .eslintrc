@@ -61,7 +61,7 @@
     "no-self-assign": 2,
     "no-self-compare": 2,
     "no-sequences": 2,
-    "no-shadow": 2,
+    "no-shadow": 0,
     "no-undef": 2,
     "no-underscore-dangle": 0,
     "no-unreachable": 1,

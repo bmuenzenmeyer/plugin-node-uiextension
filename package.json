@@ -1,6 +1,6 @@
 {
   "name": "plugin-node-uiextension",
-  "version": "0.0.1-alpha",
+  "version": "1.0.0-alpha",
   "description": "Provide a simple PL chrome customization path versus forking styleguide-assets-default",
   "main": "index.js",
   "dependencies": {
