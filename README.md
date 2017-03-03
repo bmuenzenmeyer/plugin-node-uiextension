@@ -52,7 +52,7 @@ Note the defaulted `pattern-scaffolding.css` file, which is relative to the inst
 
 > At this time, loading external CSS is not supported.
 
-This file is already responsible for meta-styling of your patterns, and is usually only scoped to the viewer `<iframe/>`. With this default, you now have a useful CSS file for altering both the Pattern Lab UI inside the ish `<iframe/>`` as well as the main frontend.  You can use a [mockup of Pattern Lab on Codepen](http://codepen.io/bmuenzenmeyer/pen/791da488b2a73909a58eacf801af83d4) to alter the look and feel, and then export or append the **compiled css** back into `pattern-scaffolding.css`.
+This file is already responsible for meta-styling of your patterns, and is usually only scoped to the viewer `<iframe/>`. With this default, you now have a useful CSS file for altering both the Pattern Lab UI inside the ish `<iframe/>` as well as the main frontend.  You can use a [mockup of Pattern Lab on Codepen](http://codepen.io/bmuenzenmeyer/pen/791da488b2a73909a58eacf801af83d4) to alter the look and feel, and then export or append the **compiled css** back into `pattern-scaffolding.css`.
 
 Here's a [Pattern Lab light theme](http://codepen.io/bmuenzenmeyer/pen/813a628ae7185fed6137cc2498e74df5) quickly created using the CodePen above.
 
