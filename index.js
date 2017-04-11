@@ -75,6 +75,7 @@ function pluginInit(patternlab) {
 
   //write the plugin json to public/patternlab-components
   var pluginConfig = getPluginFrontendConfig();
+  pluginConfig.title = patternlab.config.plugins[pluginName].options.title;
   pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets;
   pluginConfig.navLinks = patternlab.config.plugins[pluginName].options.navLinks;
   pluginConfig.gearLinks = patternlab.config.plugins[pluginName].options.gearLinks;
@@ -104,6 +105,11 @@ function pluginInit(patternlab) {
           //we are also being a bit lazy here, since we only expect one file
           let uiextensionJSFileContents = fs.readFileSync(pluginFiles[i], 'utf8');
           let snippetString = '';
+
+          //customize page title
+          uiextensionJSFileContents = (pluginConfig.title && typeof(pluginConfig.title) == 'string')
+            ? fillPlaceholder(uiextensionJSFileContents, '/*HTML-TITLE*/',  pluginConfig.title)
+            : fillPlaceholder(uiextensionJSFileContents, '/*HTML-TITLE*/',  'Pattern Lab');
 
           //construct our links from the snippets
           if (pluginConfig.navLinks) {
