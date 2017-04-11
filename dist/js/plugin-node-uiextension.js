@@ -5,6 +5,8 @@ var PluginUIExtension = {
    * The function defined as the onready callback within the plugin configuration.
    */
   init: function () {
+    document.title = '/*HTML-TITLE*/';
+
     var $nav = $('#pl-pattern-nav-target');
     $nav.prepend(/*NAVLINKS-BEFORE-SNIPPET*/);
     $nav.append(/*NAVLINKS-AFTER-SNIPPET*/);
