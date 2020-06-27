@@ -39,9 +39,9 @@ Example:
         "before": [],
         "after": []
       },
-      "gearLinks": {
+      "toolLinks": {
         "before": [],
-        "beforeSearch": []
+        "after": []
       }
     }
   }
@@ -62,7 +62,7 @@ This is also a good way to build [custom pattern states](http://patternlab.io/do
 
 #### Adding Links
 
-A `navLinks` and `gearLinks` object are also initialized post-installation, and allow you to add arbitrary anchor tags to the front end in various locations.
+A `navLinks` and `toolLinks` object are also initialized post-installation, and allow you to add arbitrary anchor tags to the front end in various locations.
 
 For example, adding the following snippet:
 
@@ -81,6 +81,19 @@ For example, adding the following snippet:
 ```
 
 would add a link to the `Voice and Tone` before the main navigation, with a `Contribute` and `Downloads` link to follow.
+
+Within the `toolLinks` you do have an additional property called `icon` that you could choose from - just use the filename without the `.svg` ending for this property: https://github.com/pattern-lab/patternlab-node/tree/master/packages/uikit-workshop/src/icons
+
+``` json
+...
+"toolLinks": {
+  "before": [
+    { "text": "Voice and Tone", "url": "http://example.com/writing-guide", "class": "", "icon": "help"}
+  ],
+  "after": []
+},
+...
+```
 
 ## Enabling / Disabling the Plugin
 
