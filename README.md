@@ -26,7 +26,7 @@ Post-installation, you will see the following in your `patternlab-config.json`:
 
 Example:
 
-```
+``` json
 "plugins": {
   "plugin-node-uiextension": {
     "enabled": true,
@@ -66,7 +66,7 @@ A `navLinks` and `toolLinks` object are also initialized post-installation, and 
 
 For example, adding the following snippet:
 
-```
+``` json
 ...
 "navLinks": {
   "before": [
