@@ -4,7 +4,7 @@
 
 # UI Extension Plugin for Pattern Lab Node
 
-The UI Extension plugin allows users to customize the Pattern Lab frontend style guide without having to fork [styleguide-assets-default](https://github.com/pattern-lab/styleguidekit-assets-default). It is intended for styling overrides and navigation additions. If you need anything further, it's suggested that you fork the `styleguide-assets-default` repo and consume your own custom frontend.
+The UI Extension plugin allows users to customize the Pattern Lab frontend style guide without having to fork [UIKit Workshop](https://github.com/pattern-lab/patternlab-node/tree/master/packages/uikit-workshop). It is intended for styling overrides and navigation additions. If you need anything further, it's suggested that you fork the [`UIKit Bare`](https://github.com/pattern-lab/uikit-bare) repo and consume your own custom frontend.
 
 ![](https://cloud.githubusercontent.com/assets/298435/23539989/2fa47a5c-ffa4-11e6-9eee-ffb43d24dede.png)
 
