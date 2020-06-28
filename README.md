@@ -58,7 +58,7 @@ This file is already responsible for meta-styling of your patterns, and is usual
 
 Here's a [Pattern Lab light theme](http://codepen.io/bmuenzenmeyer/pen/813a628ae7185fed6137cc2498e74df5) quickly created using the CodePen above.
 
-This is also a good way to build [custom pattern states](http://patternlab.io/docs/pattern-states.html#node) and have their colors represented on the UI.
+This is also a good way to build [custom pattern states](https://patternlab.io/docs/using-pattern-states/#heading-adding-customized-states) and have their colors represented on the UI.
 
 #### Adding Links
 
