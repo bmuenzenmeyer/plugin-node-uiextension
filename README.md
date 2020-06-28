@@ -10,7 +10,7 @@ The UI Extension plugin allows users to customize the Pattern Lab frontend style
 
 ## Installation
 
-To add the UI Extension Plugin to your project using [npm](http://npmjs.com/) type:
+To add the UI Extension Plugin to your project using [npm](https://www.npmjs.com/) type:
 
     npm install plugin-node-uiextension --save
 
@@ -54,9 +54,9 @@ Note the defaulted `pattern-scaffolding.css` file, which is relative to the inst
 
 > At this time, loading external CSS is not supported.
 
-This file is already responsible for meta-styling of your patterns, and is usually only scoped to the viewer `<iframe/>`. With this default, you now have a useful CSS file for altering both the Pattern Lab UI inside the ish `<iframe/>` as well as the main frontend.  You can use a [mockup of Pattern Lab on Codepen](http://codepen.io/bmuenzenmeyer/pen/791da488b2a73909a58eacf801af83d4) to alter the look and feel, and then export or append the **compiled css** back into `pattern-scaffolding.css`.
+This file is already responsible for meta-styling of your patterns, and is usually only scoped to the viewer `<iframe/>`. With this default, you now have a useful CSS file for altering both the Pattern Lab UI inside the ish `<iframe/>` as well as the main frontend.  You can use a [mockup of Pattern Lab on Codepen](https://codepen.io/bmuenzenmeyer/pen/zNmmez) to alter the look and feel, and then export or append the **compiled css** back into `pattern-scaffolding.css`.
 
-Here's a [Pattern Lab light theme](http://codepen.io/bmuenzenmeyer/pen/813a628ae7185fed6137cc2498e74df5) quickly created using the CodePen above.
+Here's a [Pattern Lab light theme](https://codepen.io/bmuenzenmeyer/pen/RKqBqX) quickly created using the CodePen above.
 
 This is also a good way to build [custom pattern states](https://patternlab.io/docs/using-pattern-states/#heading-adding-customized-states) and have their colors represented on the UI.
 
@@ -70,11 +70,11 @@ For example, adding the following snippet:
 ...
 "navLinks": {
   "before": [
-    { "text": "Voice and Tone", "url": "http://example.com/writing-guide", "class": ""}
+    { "text": "Voice and Tone", "url": "https://example.com/writing-guide", "class": ""}
   ],
   "after": [
-    { "text": "Contribute", "url": "http://example.com/contribute", "class": ""},
-    { "text": "Downloads", "url": "http://example.com/resources", "class": ""}
+    { "text": "Contribute", "url": "https://example.com/contribute", "class": ""},
+    { "text": "Downloads", "url": "https://example.com/resources", "class": ""}
   ]
 },
 ...
