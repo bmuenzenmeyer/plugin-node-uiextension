@@ -1,6 +1,8 @@
 'use strict';
 
 const pluginName = '@mfranzke/plugin-node-uiextension';
+//remove the forward-slash, which can accidentally result in directories being written in the output
+const safePluginName = pluginName.replaceAll('/', '-');
 
 const fs = require('fs-extra');
 const glob = require('glob');
