@@ -30,7 +30,7 @@ Example:
 
 ``` json
 "plugins": {
-  "plugin-node-uiextension": {
+  "@mfranzke/plugin-node-uiextension": {
     "enabled": true,
     "initialized": false,
     "options": {
@@ -99,4 +99,4 @@ Within the `toolLinks` you do have an additional property called `icon` that you
 
 ## Enabling / Disabling the Plugin
 
-After install, you may manually enable or disable the plugin by finding the `plugin-node-uiextension` key within your main Pattern Lab project's `patternlab-config.json` file and setting the `enabled` flag. In the future this will be possible via CLI.
+After install, you may manually enable or disable the plugin by finding the `@mfranzke/plugin-node-uiextension` key within your main Pattern Lab project's `patternlab-config.json` file and setting the `enabled` flag. In the future this will be possible via CLI.

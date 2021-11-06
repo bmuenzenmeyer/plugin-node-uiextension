@@ -13,7 +13,7 @@
     "url": "git+https://github.com/mfranzke/plugin-node-uiextension.git"
   },
   "scripts": {
-    "test": "eslint dist/js/plugin-node-uiextension.js index.js"
+    "test": "eslint dist/js/@mfranzke-plugin-node-uiextension index.js"
   },
   "author": "Maximilian Franzke",
   "license": "MIT",
