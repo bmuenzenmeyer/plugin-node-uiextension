@@ -1,7 +1,8 @@
 'use strict';
 
 const pluginName = '@mfranzke/plugin-node-uiextension';
-//remove the forward-slash, which can accidentally result in directories being written in the output
+
+// Remove the forward-slash, which can accidentally result in directories being written in the output
 const safePluginName = pluginName.replaceAll('/', '-');
 
 const fs = require('fs-extra');
@@ -60,9 +61,8 @@ function createLink(link, template) {
 /**
  * Replaces the snippet placeholder with actual content
  */
-function fillPlaceholder(file, placeholder, snippet){
-  snippet = snippet.replace(/,\s*$/, '');
-  return file.replace(placeholder, snippet);
+function fillPlaceholder(file, placeholder, snippet) {
+  return file.replace(placeholder, snippet.replace(/,\s*$/, ''));
 }
 
 /**
