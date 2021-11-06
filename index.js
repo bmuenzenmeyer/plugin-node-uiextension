@@ -51,7 +51,8 @@ function getPluginFrontendConfig() {
 * Creates a link from the passed in data
 */
 function createLink(link, template) {
-  return template.replace('<<class>>', link.class).replace('<<url>>', link.url).replace('<<text>>', link.text);
+  const icon = link.icon ? '<pl-icon name="' + link.icon + '" slot="after"></pl-icon>' : '';
+  return template.replace('<<class>>', link.class).replace('<<url>>', link.url).replace('<<text>>', link.text).replace('<<icon>>', icon);
 }
 
 /**
@@ -77,7 +78,7 @@ function pluginInit(patternlab) {
   var pluginConfig = getPluginFrontendConfig();
   pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets;
   pluginConfig.navLinks = patternlab.config.plugins[pluginName].options.navLinks;
-  pluginConfig.gearLinks = patternlab.config.plugins[pluginName].options.gearLinks;
+  pluginConfig.toolLinks = patternlab.config.plugins[pluginName].options.toolLinks;
   writeConfigToOutput(patternlab, pluginConfig);
 
   //add the plugin config to the patternlab-object for later export
@@ -91,7 +92,10 @@ function pluginInit(patternlab) {
 
   if (pluginFiles && pluginFiles.length > 0) {
 
-    const link_frontend_snippet = fs.readFileSync(path.resolve(__dirname + '/src/snippet.js'), 'utf8');
+    const link_frontend_snippet = {
+      nav: fs.readFileSync(path.resolve(__dirname + '/src/snippet-nav.js'), 'utf8'),
+      tool: fs.readFileSync(path.resolve(__dirname + '/src/snippet-tool.js'), 'utf8')
+    };
 
     for (var i = 0; i < pluginFiles.length; i++) {
       try {
@@ -109,7 +113,7 @@ function pluginInit(patternlab) {
           if (pluginConfig.navLinks) {
             if (pluginConfig.navLinks.before && pluginConfig.navLinks.before.length > 0) {
               for (var n = 0; n < pluginConfig.navLinks.before.length; n++) {
-                snippetString += createLink(pluginConfig.navLinks.before[n], link_frontend_snippet);
+                snippetString += createLink(pluginConfig.navLinks.before[n], link_frontend_snippet.nav);
               }
               uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*NAVLINKS-BEFORE-SNIPPET*/', snippetString);
             }
@@ -117,27 +121,27 @@ function pluginInit(patternlab) {
             snippetString = '';
             if (pluginConfig.navLinks.after && pluginConfig.navLinks.after.length > 0) {
               for (var j = 0; j < pluginConfig.navLinks.after.length; j++) {
-                snippetString += createLink(pluginConfig.navLinks.after[j], link_frontend_snippet);
+                snippetString += createLink(pluginConfig.navLinks.after[j], link_frontend_snippet.nav);
               }
               uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*NAVLINKS-AFTER-SNIPPET*/', snippetString);
             }
           }
 
-          if (pluginConfig.gearLinks) {
+          if (pluginConfig.toolLinks) {
             snippetString = '';
-            if (pluginConfig.gearLinks.before && pluginConfig.gearLinks.before.length > 0) {
-              for (var k = 0; k < pluginConfig.gearLinks.before.length; k++) {
-                snippetString += createLink(pluginConfig.gearLinks.before[k], link_frontend_snippet);
+            if (pluginConfig.toolLinks.before && pluginConfig.toolLinks.before.length > 0) {
+              for (var k = 0; k < pluginConfig.toolLinks.before.length; k++) {
+                snippetString += createLink(pluginConfig.toolLinks.before[k], link_frontend_snippet.tool);
               }
-              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*GEARLINKS-BEFORE-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*TOOLLINKS-BEFORE-SNIPPET*/', snippetString);
             }
 
             snippetString = '';
-            if (pluginConfig.gearLinks.beforeSearch && pluginConfig.gearLinks.beforeSearch.length > 0) {
-              for (var m = 0; m < pluginConfig.gearLinks.beforeSearch.length; m++) {
-                snippetString += createLink(pluginConfig.gearLinks.beforeSearch[m], link_frontend_snippet);
+            if (pluginConfig.toolLinks.after && pluginConfig.toolLinks.after.length > 0) {
+              for (var m = 0; m < pluginConfig.toolLinks.after.length; m++) {
+                snippetString += createLink(pluginConfig.toolLinks.after[m], link_frontend_snippet.tool);
               }
-              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*GEARLINKS-BEFORESEARCH-SNIPPET*/', snippetString);
+              uiextensionJSFileContents = fillPlaceholder(uiextensionJSFileContents, '/*TOOLLINKS-AFTER-SNIPPET*/', snippetString);
             }
           }
 

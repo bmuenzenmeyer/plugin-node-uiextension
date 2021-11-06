@@ -6,7 +6,7 @@ This is a fork from the previous development by [Brian Muenzenmeyer](https://git
 
 # UI Extension Plugin for Pattern Lab Node
 
-The UI Extension plugin allows users to customize the Pattern Lab frontend style guide without having to fork [styleguide-assets-default](https://github.com/pattern-lab/styleguidekit-assets-default). It is intended for styling overrides and navigation additions. If you need anything further, it's suggested that you fork the `styleguide-assets-default` repo and consume your own custom frontend.
+The UI Extension plugin allows users to customize the Pattern Lab frontend style guide without having to fork [UIKit Workshop](https://github.com/pattern-lab/patternlab-node/tree/master/packages/uikit-workshop). It is intended for styling overrides and navigation additions. If you need anything further, it's suggested that you fork the [`UIKit Bare`](https://github.com/pattern-lab/uikit-bare) repo and consume your own custom frontend.
 
 ![](https://cloud.githubusercontent.com/assets/298435/23539989/2fa47a5c-ffa4-11e6-9eee-ffb43d24dede.png)
 
@@ -28,7 +28,7 @@ Post-installation, you will see the following in your `patternlab-config.json`:
 
 Example:
 
-```
+``` json
 "plugins": {
   "plugin-node-uiextension": {
     "enabled": true,
@@ -41,9 +41,9 @@ Example:
         "before": [],
         "after": []
       },
-      "gearLinks": {
+      "toolLinks": {
         "before": [],
-        "beforeSearch": []
+        "after": []
       }
     }
   }
@@ -64,11 +64,11 @@ This is also a good way to build [custom pattern states](https://patternlab.io/d
 
 #### Adding Links
 
-A `navLinks` and `gearLinks` object are also initialized post-installation, and allow you to add arbitrary anchor tags to the front end in various locations.
+A `navLinks` and `toolLinks` object are also initialized post-installation, and allow you to add arbitrary anchor tags to the front end in various locations.
 
 For example, adding the following snippet:
 
-```
+``` json
 ...
 "navLinks": {
   "before": [
@@ -83,6 +83,19 @@ For example, adding the following snippet:
 ```
 
 would add a link to the `Voice and Tone` before the main navigation, with a `Contribute` and `Downloads` link to follow.
+
+Within the `toolLinks` you do have an additional property called `icon` that you could choose from - just use the filename without the `.svg` ending for this property: https://github.com/pattern-lab/patternlab-node/tree/master/packages/uikit-workshop/src/icons
+
+``` json
+...
+"toolLinks": {
+  "before": [
+    { "text": "Voice and Tone", "url": "http://example.com/writing-guide", "class": "", "icon": "help"}
+  ],
+  "after": []
+},
+...
+```
 
 ## Enabling / Disabling the Plugin
 
