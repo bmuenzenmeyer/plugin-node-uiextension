@@ -1,6 +1,8 @@
 'use strict';
 
 const pluginName = 'plugin-node-uiextension';
+//remove the forward-slash, which can accidentally result in directories being written in the output
+const safePluginName = pluginName.replaceAll('/', '-');
 
 const fs = require('fs-extra');
 const glob = require('glob');
@@ -10,7 +12,7 @@ const _ = require('lodash');
 function writeConfigToOutput(patternlab, pluginConfig) {
   var pluginConfigPathName = path.resolve(patternlab.config.paths.public.root, 'patternlab-components', 'packages');
   try {
-    fs.outputFileSync(pluginConfigPathName + '/' + pluginName + '.json', JSON.stringify(pluginConfig, null, 2));
+    fs.outputFileSync(pluginConfigPathName + '/' + safePluginName + '.json', JSON.stringify(pluginConfig, null, 2));
   } catch (ex) {
     console.trace(pluginName + ': Error occurred while writing pluginFile configuration');
     console.log(ex);
@@ -33,11 +35,11 @@ function registerEvents(patternlab) {
 */
 function getPluginFrontendConfig() {
   var defaults = {
-    "name":"pattern-lab\/plugin-node-uiextension",
+    "name": pluginName,
     "templates":[],
     "stylesheets":[],
     "javascripts":[
-      "patternlab-components\/pattern-lab\/" + pluginName + "\/js\/" + pluginName + ".js"
+      "patternlab-components\/pattern-lab\/" + safePluginName + "\/js\/" + safePluginName + ".js"
     ],
     "onready":"PluginUIExtension.init()",
     "callback":""
@@ -98,7 +100,7 @@ function pluginInit(patternlab) {
         var fileStat = fs.statSync(pluginFiles[i]);
         if (fileStat.isFile()) {
           var relativePath = path.relative(__dirname, pluginFiles[i]).replace('dist', ''); //dist is dropped
-          var writePath = path.join(patternlab.config.paths.public.root, 'patternlab-components', 'pattern-lab', pluginName, relativePath);
+          var writePath = path.join(patternlab.config.paths.public.root, 'patternlab-components', 'pattern-lab', safePluginName, relativePath);
 
           //we need to alter the dist file to add links for us
           //we are also being a bit lazy here, since we only expect one file
