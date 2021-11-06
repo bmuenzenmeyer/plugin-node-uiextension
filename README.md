@@ -1,6 +1,8 @@
-![license](https://img.shields.io/github/license/bmuenzenmeyer/plugin-node-uiextension.svg)
-[![npm](https://img.shields.io/npm/v/plugin-node-uiextension.svg)](https://www.npmjs.com/package/plugin-node-uiextension)
+![license](https://img.shields.io/github/license/mfranzke/plugin-node-uiextension.svg)
+[![npm](https://img.shields.io/npm/v/@mfranzke/plugin-node-uiextension.svg)](https://www.npmjs.com/package/@mfranzke/plugin-node-uiextension)
 [![Gitter](https://img.shields.io/gitter/room/pattern-lab/node.svg)](https://gitter.im/pattern-lab/node)
+
+This is a fork from the previous development by [Brian Muenzenmeyer](https://github.com/bmuenzenmeyer/plugin-node-uiextension/), so a lot of kudos should go to Brian for that ! I mainly wanted to optimize the code further and bring it to pattern lab 5 compatibility.
 
 # UI Extension Plugin for Pattern Lab Node
 
@@ -12,7 +14,7 @@ The UI Extension plugin allows users to customize the Pattern Lab frontend style
 
 To add the UI Extension Plugin to your project using [npm](http://npmjs.com/) type:
 
-    npm install plugin-node-uiextension --save
+    npm install @mfranzke/plugin-node-uiextension --save
 
 Or add it directly to your project's `package.json` file and run `npm install`
 

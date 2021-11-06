@@ -1,6 +1,6 @@
 'use strict';
 
-const pluginName = 'plugin-node-uiextension';
+const pluginName = '@mfranzke/plugin-node-uiextension';
 
 const fs = require('fs-extra');
 const glob = require('glob');
