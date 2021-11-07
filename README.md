@@ -35,7 +35,7 @@ Example:
     "initialized": false,
     "options": {
       "stylesheets": [
-        "../../../css/pattern-scaffolding.css"
+        "css/pattern-scaffolding.css"
       ],
       "navLinks": {
         "before": [],

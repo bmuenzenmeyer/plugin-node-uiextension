@@ -78,7 +78,7 @@ function pluginInit(patternlab) {
 
   //write the plugin json to public/patternlab-components
   var pluginConfig = getPluginFrontendConfig();
-  pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets;
+  pluginConfig.stylesheets = patternlab.config.plugins[pluginName].options.stylesheets.map(stylesheet => { return (stylesheet.substr(0, 4).toLowerCase() === 'http') ? stylesheet : path.join("../../../", stylesheet); });
   pluginConfig.navLinks = patternlab.config.plugins[pluginName].options.navLinks;
   pluginConfig.toolLinks = patternlab.config.plugins[pluginName].options.toolLinks;
   writeConfigToOutput(patternlab, pluginConfig);

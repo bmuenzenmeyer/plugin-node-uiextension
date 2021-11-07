@@ -1,5 +1,5 @@
 {
-  "stylesheets":["../../../css/pattern-scaffolding.css"],
+  "stylesheets":["css/pattern-scaffolding.css"],
   "navLinks": {
     "before": [],
     "after": []
