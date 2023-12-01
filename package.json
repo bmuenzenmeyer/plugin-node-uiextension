@@ -4,8 +4,8 @@
   "description": "Provide a simple PL chrome customization path versus forking styleguide-assets-default",
   "main": "index.js",
   "dependencies": {
-    "fs-extra": "^0.30.0",
-    "glob": "^7.0.0",
+    "fs-extra": "^1.0.0",
+    "glob": "^9.0.0",
     "lodash": "~4.13.1"
   },
   "repository": {
