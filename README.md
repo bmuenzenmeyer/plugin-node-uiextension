@@ -1,3 +1,6 @@
+> [!WARNING]
+> No longer maintained
+
 ![license](https://img.shields.io/github/license/bmuenzenmeyer/plugin-node-uiextension.svg)
 [![npm](https://img.shields.io/npm/v/plugin-node-uiextension.svg)](https://www.npmjs.com/package/plugin-node-uiextension)
 [![Gitter](https://img.shields.io/gitter/room/pattern-lab/node.svg)](https://gitter.im/pattern-lab/node)
